@@ -35,12 +35,47 @@ namespace RegeditAutoload
                 RegistryKey currentVersion = windows.OpenSubKey("CurrentVersion");
                 RegistryKey run = currentVersion.OpenSubKey("Run");
 
-                Console.WriteLine(run.ValueCount);
+                string pathRun = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run";
+                OpenPathSubKey(pathRun);
 
-                foreach (var item in run.GetValueNames())
-                {
-                    listBox.Items.Add(item);
-                }
+                //Console.WriteLine(currentUserKey);
+
+                //foreach (var item in run.GetValueNames())
+                //{
+                //    listBox.Items.Add(item);
+                //}
+            }
+        }
+
+        private void OpenPathSubKey(string pathSubKey)
+        {
+            string HK = pathSubKey.Substring(0, pathSubKey.IndexOf('\\'));
+            RegistryKey key = GetHKRegistryKey(HK);
+
+            foreach (var item in pathSubKey.Substring(pathSubKey.IndexOf('\\')).Split('\\'))
+            {
+                key = key.OpenSubKey(item);
+            }
+
+            Console.WriteLine(key.ValueCount);
+        }
+
+        private RegistryKey GetHKRegistryKey(string hK)
+        {
+            switch (hK)
+            {
+                case "HKEY_CLASSES_ROOT":
+                    return Registry.ClassesRoot;
+                case "HKEY_CURRENT_USER":
+                    return Registry.CurrentUser;
+                case "HKEY_LOCAL_MACHINE":
+                    return Registry.LocalMachine;
+                case "HKEY_USERS":
+                    return Registry.Users;
+                case "HKEY_CURRENT_CONFIG":
+                    return Registry.CurrentConfig;
+                default:
+                    return Registry.CurrentUser;
             }
         }
     }
