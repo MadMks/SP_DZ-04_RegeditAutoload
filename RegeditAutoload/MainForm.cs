@@ -13,6 +13,9 @@ namespace RegeditAutoload
 {
     public partial class MainForm : Form
     {
+        private RegistryKey registryKey = null;
+        string pathRun = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run";
+
         public MainForm()
         {
             InitializeComponent();
@@ -22,42 +25,43 @@ namespace RegeditAutoload
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            ShowProgram();
+            registryKey = GetLastSubKeyInPath(pathRun);
+
+            ShowPrograms(registryKey);
+
+            //RegistryKey software = currentUserKey.OpenSubKey("Software");
+            //RegistryKey microsoft = software.OpenSubKey("Microsoft");
+            //RegistryKey windows = microsoft.OpenSubKey("Windows");
+            //RegistryKey currentVersion = windows.OpenSubKey("CurrentVersion");
+            //RegistryKey run = currentVersion.OpenSubKey("Run");
         }
 
-        private void ShowProgram()
+        private void ShowPrograms(RegistryKey key)
         {
-            using (RegistryKey currentUserKey = Registry.CurrentUser)
+            listBox.Items.Clear();
+
+            foreach (var item in key.GetValueNames())
             {
-                RegistryKey software = currentUserKey.OpenSubKey("Software");
-                RegistryKey microsoft = software.OpenSubKey("Microsoft");
-                RegistryKey windows = microsoft.OpenSubKey("Windows");
-                RegistryKey currentVersion = windows.OpenSubKey("CurrentVersion");
-                RegistryKey run = currentVersion.OpenSubKey("Run");
-
-                string pathRun = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run";
-                OpenPathSubKey(pathRun);
-
-                //Console.WriteLine(currentUserKey);
-
-                //foreach (var item in run.GetValueNames())
-                //{
-                //    listBox.Items.Add(item);
-                //}
+                listBox.Items.Add(item);
             }
         }
 
-        private void OpenPathSubKey(string pathSubKey)
+        /// <summary>
+        /// Получить последний подраздел в пути.
+        /// </summary>
+        /// <param name="pathSubKey">Полный путь.</param>
+        private RegistryKey GetLastSubKeyInPath(string pathSubKey)
         {
             string HK = pathSubKey.Substring(0, pathSubKey.IndexOf('\\'));
+            string path = pathSubKey.Substring(pathSubKey.IndexOf('\\'));
             RegistryKey key = GetHKRegistryKey(HK);
 
-            foreach (var item in pathSubKey.Substring(pathSubKey.IndexOf('\\')).Split('\\'))
+            foreach (var item in path.Split('\\'))
             {
                 key = key.OpenSubKey(item);
             }
 
-            Console.WriteLine(key.ValueCount);
+            return key;
         }
 
         private RegistryKey GetHKRegistryKey(string hK)
@@ -77,6 +81,11 @@ namespace RegeditAutoload
                 default:
                     return Registry.CurrentUser;
             }
+        }
+
+        private void buttonUpgrade_Click(object sender, EventArgs e)
+        {
+            ShowPrograms(registryKey);
         }
     }
 }

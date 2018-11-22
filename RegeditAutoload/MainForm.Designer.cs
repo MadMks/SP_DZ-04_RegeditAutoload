@@ -50,6 +50,7 @@
             this.buttonUpgrade.TabIndex = 1;
             this.buttonUpgrade.Text = "Обновить";
             this.buttonUpgrade.UseVisualStyleBackColor = true;
+            this.buttonUpgrade.Click += new System.EventHandler(this.buttonUpgrade_Click);
             // 
             // buttonAdd
             // 
