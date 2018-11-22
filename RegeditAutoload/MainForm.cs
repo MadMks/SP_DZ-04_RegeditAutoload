@@ -25,15 +25,43 @@ namespace RegeditAutoload
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            DisableButtons();
+
             registryKey = GetLastSubKeyInPath(pathRun);
 
             ShowPrograms(registryKey);
+
+            listBox.SelectedIndexChanged += ListBox_SelectedIndexChanged;
 
             //RegistryKey software = currentUserKey.OpenSubKey("Software");
             //RegistryKey microsoft = software.OpenSubKey("Microsoft");
             //RegistryKey windows = microsoft.OpenSubKey("Windows");
             //RegistryKey currentVersion = windows.OpenSubKey("CurrentVersion");
             //RegistryKey run = currentVersion.OpenSubKey("Run");
+        }
+
+        private void ListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBox.SelectedIndex == -1)
+            {
+                DisableButtons();
+            }
+            else
+            {
+                EnableButtons();
+            }
+        }
+
+        private void DisableButtons()
+        {
+            buttonAdd.Enabled = false;
+            buttonDelete.Enabled = false;
+        }
+
+        private void EnableButtons()
+        {
+            buttonAdd.Enabled = true;
+            buttonDelete.Enabled = true;
         }
 
         private void ShowPrograms(RegistryKey key)
@@ -85,7 +113,14 @@ namespace RegeditAutoload
 
         private void buttonUpgrade_Click(object sender, EventArgs e)
         {
+            DisableButtons();
+
             ShowPrograms(registryKey);
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
