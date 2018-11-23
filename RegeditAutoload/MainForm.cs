@@ -14,7 +14,7 @@ namespace RegeditAutoload
     public partial class MainForm : Form
     {
         private RegistryKey registryKey = null;
-        string pathRun = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run";
+        string pathRun = @"HKEY_CURRENT_USER\Software1\Microsoft\Windows\CurrentVersion\Run";
 
         public MainForm()
         {
@@ -68,9 +68,19 @@ namespace RegeditAutoload
         {
             listBox.Items.Clear();
 
-            foreach (var item in key.GetValueNames())
+            if (key != null)
             {
-                listBox.Items.Add(item);
+                foreach (var item in key.GetValueNames())
+                {
+                    listBox.Items.Add(item);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Указанного раздела не существует.",
+                    "Ошибка открытия раздела",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
         }
 
@@ -84,9 +94,21 @@ namespace RegeditAutoload
             string path = pathSubKey.Substring(pathSubKey.IndexOf('\\'));
             RegistryKey key = GetHKRegistryKey(HK);
 
-            foreach (var item in path.Split('\\'))
+            try
             {
-                key = key.OpenSubKey(item);
+                foreach (var item in path.Split('\\'))
+                {
+                    key = key.OpenSubKey(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Невозможно открыть раздел.\n"
+                    + ex.Message,
+                    "Ошибка в имени раздела",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return null;
             }
 
             return key;
