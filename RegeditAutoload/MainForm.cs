@@ -14,7 +14,7 @@ namespace RegeditAutoload
     public partial class MainForm : Form
     {
         private RegistryKey registryKey = null;
-        string pathRun = @"HKEY_CURRENT_USER\Software1\Microsoft\Windows\CurrentVersion\Run";
+        string pathRun = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run";
 
         public MainForm()
         {
