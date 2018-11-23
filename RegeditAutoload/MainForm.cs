@@ -107,6 +107,10 @@ namespace RegeditAutoload
                 case "HKEY_CURRENT_CONFIG":
                     return Registry.CurrentConfig;
                 default:
+                    MessageBox.Show("Неправильное имя основного раздела!",
+                        "Ошибка открытия раздела",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                     return Registry.CurrentUser;
             }
         }
