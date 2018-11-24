@@ -15,9 +15,9 @@ namespace RegeditAutoload
     public partial class MainForm : Form
     {
         private RegistryKey registryKey = null;
-        string pathRun = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run";
-
         private List<RegistryKey> registryKeysOpen = null;
+
+        string[] keyPaths = null;
 
         public MainForm()
         {
@@ -30,25 +30,32 @@ namespace RegeditAutoload
         {
             registryKeysOpen = new List<RegistryKey>();
 
+            CreatingKeyPath();
+            comboBoxWays.Items.AddRange(keyPaths);
+            comboBoxWays.SelectedIndex = 0;
+
             ListviewSetting();
 
             DisableDelButtons();
 
-            registryKey = GetLastSubKeyInPath(pathRun);
-
+            registryKey = GetLastSubKeyInPath(comboBoxWays.SelectedItem.ToString());
             ShowPrograms(registryKey);
-
+            
 
             listView.ItemSelectionChanged += ListView_ItemSelectionChanged;
             this.FormClosing += MainForm_FormClosing;
-            // TODO: при изменение пути комбоБокса - закрывать предыдущий ключ
             comboBoxWays.SelectedIndexChanged += ComboBoxWays_SelectedIndexChanged;
+        }
 
-            //RegistryKey software = currentUserKey.OpenSubKey("Software");
-            //RegistryKey microsoft = software.OpenSubKey("Microsoft");
-            //RegistryKey windows = microsoft.OpenSubKey("Windows");
-            //RegistryKey currentVersion = windows.OpenSubKey("CurrentVersion");
-            //RegistryKey run = currentVersion.OpenSubKey("Run");
+        private void CreatingKeyPath()
+        {
+            keyPaths = new string[]
+            {
+                @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run",
+                @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run",
+                @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce",
+                @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce"
+            };
         }
 
         private void ListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -76,11 +83,9 @@ namespace RegeditAutoload
         private void ComboBoxWays_SelectedIndexChanged(object sender, EventArgs e)
         {
             CloseAllSubKey();
-
-            // TODO: проработать получение из комбо
-            // Получаем новый ключ по выбрвнному пути.
-            //registryKey = GetLastSubKeyInPath(item in combo)
-            //ShowPrograms(registryKey);
+            
+            registryKey = GetLastSubKeyInPath(comboBoxWays.SelectedItem.ToString());
+            ShowPrograms(registryKey);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -90,10 +95,13 @@ namespace RegeditAutoload
 
         private void CloseAllSubKey()
         {
-            this.registryKeysOpen.Reverse();
-            foreach (var item in registryKeysOpen)
+            if (registryKeysOpen.Count > 0)
             {
-                item.Close();
+                this.registryKeysOpen.Reverse();
+                foreach (var item in registryKeysOpen)
+                {
+                    item.Close();
+                }
             }
         }
         
