@@ -43,5 +43,15 @@ namespace RegeditAutoload.Forms
                 MessageBox.Show("Нужно заполнить все поля!");
             }
         }
+
+        private void buttonOverview_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxValue.Text = openFileDialog.FileName;
+            }
+        }
     }
 }

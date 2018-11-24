@@ -34,11 +34,12 @@
             this.textBoxValue = new System.Windows.Forms.TextBox();
             this.labelParameter = new System.Windows.Forms.Label();
             this.labelValue = new System.Windows.Forms.Label();
+            this.buttonOverview = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonOk
             // 
-            this.buttonOk.Location = new System.Drawing.Point(33, 143);
+            this.buttonOk.Location = new System.Drawing.Point(79, 133);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
             this.buttonOk.TabIndex = 0;
@@ -48,7 +49,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(166, 143);
+            this.buttonCancel.Location = new System.Drawing.Point(212, 133);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
@@ -90,11 +91,22 @@
             this.labelValue.TabIndex = 5;
             this.labelValue.Text = "Значение";
             // 
+            // buttonOverview
+            // 
+            this.buttonOverview.Location = new System.Drawing.Point(272, 89);
+            this.buttonOverview.Name = "buttonOverview";
+            this.buttonOverview.Size = new System.Drawing.Size(75, 23);
+            this.buttonOverview.TabIndex = 6;
+            this.buttonOverview.Text = "Обзор";
+            this.buttonOverview.UseVisualStyleBackColor = true;
+            this.buttonOverview.Click += new System.EventHandler(this.buttonOverview_Click);
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(274, 178);
+            this.ClientSize = new System.Drawing.Size(360, 168);
+            this.Controls.Add(this.buttonOverview);
             this.Controls.Add(this.labelValue);
             this.Controls.Add(this.labelParameter);
             this.Controls.Add(this.textBoxValue);
@@ -118,5 +130,6 @@
         private System.Windows.Forms.TextBox textBoxValue;
         private System.Windows.Forms.Label labelParameter;
         private System.Windows.Forms.Label labelValue;
+        private System.Windows.Forms.Button buttonOverview;
     }
 }
