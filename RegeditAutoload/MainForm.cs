@@ -29,13 +29,16 @@ namespace RegeditAutoload
         {
             registryKeysOpen = new List<RegistryKey>();
 
+            ListviewSetting();
+
             DisableButtons();
 
             registryKey = GetLastSubKeyInPath(pathRun);
 
             ShowPrograms(registryKey);
 
-            listBox.SelectedIndexChanged += ListBox_SelectedIndexChanged;
+            //listBox.SelectedIndexChanged += ListBox_SelectedIndexChanged;
+            listView.ItemSelectionChanged += ListView_ItemSelectionChanged;
             this.FormClosing += MainForm_FormClosing;
             // TODO: при изменение пути комбоБокса - закрывать предыдущий ключ
             comboBoxWays.SelectedIndexChanged += ComboBoxWays_SelectedIndexChanged;
@@ -45,6 +48,28 @@ namespace RegeditAutoload
             //RegistryKey windows = microsoft.OpenSubKey("Windows");
             //RegistryKey currentVersion = windows.OpenSubKey("CurrentVersion");
             //RegistryKey run = currentVersion.OpenSubKey("Run");
+        }
+
+        private void ListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (listView.SelectedItems.Count == 0)
+            {
+                DisableButtons();
+            }
+            else
+            {
+                EnableButtons();
+            }
+        }
+
+        private void ListviewSetting()
+        {
+            listView.View = View.Details;
+            listView.FullRowSelect = true;
+            listView.MultiSelect = false;
+
+            listView.Columns.Add("Параметр", 100);
+            listView.Columns.Add("Значение", 200);
         }
 
         private void ComboBoxWays_SelectedIndexChanged(object sender, EventArgs e)
@@ -99,12 +124,20 @@ namespace RegeditAutoload
         private void ShowPrograms(RegistryKey key)
         {
             listBox.Items.Clear();
+            listView.Items.Clear();
 
             if (key != null)
             {
                 foreach (var item in key.GetValueNames())
                 {
                     listBox.Items.Add(item + " : " + key.GetValue(item));
+
+                    ListViewItem listViewItem = new ListViewItem(item);
+                    listViewItem.SubItems.Add(
+                        (key.GetValue(item) as string)
+                        );
+
+                    listView.Items.Add(listViewItem);
                 }
             }
             else
@@ -187,9 +220,15 @@ namespace RegeditAutoload
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(registryKey.GetValueNames()[listBox.SelectedIndex]);
-            registryKey.DeleteValue(registryKey.GetValueNames()[listBox.SelectedIndex]);
-            //registryKey.Close();
+            //Console.WriteLine(registryKey.GetValueNames()[listBox.SelectedIndex]);
+            //registryKey.DeleteValue(registryKey.GetValueNames()[listBox.SelectedIndex]);
+            if (listView.SelectedItems.Count != 0)
+            {
+                Console.WriteLine("> " + listView.SelectedItems[0].Text);
+                registryKey.DeleteValue(listView.SelectedItems[0].Text);
+            }
+
+
             ShowPrograms(registryKey);
         }
     }
