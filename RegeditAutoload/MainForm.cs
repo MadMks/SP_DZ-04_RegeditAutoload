@@ -31,7 +31,7 @@ namespace RegeditAutoload
 
             ListviewSetting();
 
-            DisableButtons();
+            DisableDelButtons();
 
             registryKey = GetLastSubKeyInPath(pathRun);
 
@@ -54,11 +54,11 @@ namespace RegeditAutoload
         {
             if (listView.SelectedItems.Count == 0)
             {
-                DisableButtons();
+                DisableDelButtons();
             }
             else
             {
-                EnableButtons();
+                EnableDelButtons();
             }
         }
 
@@ -101,23 +101,21 @@ namespace RegeditAutoload
         {
             if (listBox.SelectedIndex == -1)
             {
-                DisableButtons();
+                DisableDelButtons();
             }
             else
             {
-                EnableButtons();
+                EnableDelButtons();
             }
         }
 
-        private void DisableButtons()
+        private void DisableDelButtons()
         {
-            buttonAdd.Enabled = false;
             buttonDelete.Enabled = false;
         }
 
-        private void EnableButtons()
+        private void EnableDelButtons()
         {
-            buttonAdd.Enabled = true;
             buttonDelete.Enabled = true;
         }
 
@@ -134,7 +132,7 @@ namespace RegeditAutoload
 
                     ListViewItem listViewItem = new ListViewItem(item);
                     listViewItem.SubItems.Add(
-                        (key.GetValue(item) as string)
+                        key.GetValue(item).ToString()
                         );
 
                     listView.Items.Add(listViewItem);
@@ -208,27 +206,25 @@ namespace RegeditAutoload
 
         private void buttonUpgrade_Click(object sender, EventArgs e)
         {
-            DisableButtons();
+            DisableDelButtons();
 
             ShowPrograms(registryKey);
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+            registryKey.SetValue("t1", "111");
 
+            ShowPrograms(registryKey);
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            //Console.WriteLine(registryKey.GetValueNames()[listBox.SelectedIndex]);
-            //registryKey.DeleteValue(registryKey.GetValueNames()[listBox.SelectedIndex]);
             if (listView.SelectedItems.Count != 0)
             {
-                Console.WriteLine("> " + listView.SelectedItems[0].Text);
                 registryKey.DeleteValue(listView.SelectedItems[0].Text);
             }
-
-
+            
             ShowPrograms(registryKey);
         }
     }
