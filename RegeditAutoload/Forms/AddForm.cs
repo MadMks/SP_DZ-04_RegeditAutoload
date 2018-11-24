@@ -40,7 +40,10 @@ namespace RegeditAutoload.Forms
             }
             else
             {
-                MessageBox.Show("Нужно заполнить все поля!");
+                MessageBox.Show("Нужно заполнить все поля!",
+                    "Пустое значение",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
         }
 
