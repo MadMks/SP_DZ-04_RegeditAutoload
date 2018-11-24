@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using RegeditAutoload.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -213,9 +214,17 @@ namespace RegeditAutoload
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            registryKey.SetValue("t1", "111");
+            AddForm addForm = new AddForm();
+            
+            if (addForm.ShowDialog() == DialogResult.OK)
+            {
+                registryKey.SetValue(
+                    addForm.Parameter,
+                    addForm.Value
+                    );
 
-            ShowPrograms(registryKey);
+                ShowPrograms(registryKey);
+            }
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
