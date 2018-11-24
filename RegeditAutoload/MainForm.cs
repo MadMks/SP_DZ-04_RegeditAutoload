@@ -32,12 +32,31 @@ namespace RegeditAutoload
             ShowPrograms(registryKey);
 
             listBox.SelectedIndexChanged += ListBox_SelectedIndexChanged;
+            this.FormClosing += MainForm_FormClosing;
+            // TODO: при изменение пути комбоБокса - закрывать предыдущий ключ
+            comboBoxWays.SelectedIndexChanged += ComboBoxWays_SelectedIndexChanged;
 
             //RegistryKey software = currentUserKey.OpenSubKey("Software");
             //RegistryKey microsoft = software.OpenSubKey("Microsoft");
             //RegistryKey windows = microsoft.OpenSubKey("Windows");
             //RegistryKey currentVersion = windows.OpenSubKey("CurrentVersion");
             //RegistryKey run = currentVersion.OpenSubKey("Run");
+        }
+
+        private void ComboBoxWays_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Закрываем открытый ключ.
+            registryKey.Close();
+
+            // TODO: проработать получение из комбо
+            // Получаем новый ключ по выбрвнному пути.
+            //registryKey = GetLastSubKeyInPath(item in combo)
+            //ShowPrograms(registryKey);
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            registryKey.Close();
         }
 
         private void ListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -72,7 +91,7 @@ namespace RegeditAutoload
             {
                 foreach (var item in key.GetValueNames())
                 {
-                    listBox.Items.Add(item);
+                    listBox.Items.Add(item + " 1");
                 }
             }
             else
@@ -98,7 +117,7 @@ namespace RegeditAutoload
             {
                 foreach (var item in path.Split('\\'))
                 {
-                    key = key.OpenSubKey(item);
+                    key = key.OpenSubKey(item, true);
                 }
             }
             catch (Exception ex)
@@ -147,6 +166,14 @@ namespace RegeditAutoload
         private void buttonAdd_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine(registryKey.GetValueNames()[listBox.SelectedIndex]);
+            registryKey.DeleteValue(registryKey.GetValueNames()[listBox.SelectedIndex]);
+            //registryKey.Close();
+            ShowPrograms(registryKey);
         }
     }
 }
