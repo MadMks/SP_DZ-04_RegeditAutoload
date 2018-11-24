@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8F7F4B84-ED68-4B4E-A9C1-D8B9910CB559}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>RegeditAutoload</RootNamespace>
     <AssemblyName>RegeditAutoload</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
