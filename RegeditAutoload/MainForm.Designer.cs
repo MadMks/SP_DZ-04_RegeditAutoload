@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listBox = new System.Windows.Forms.ListBox();
             this.buttonUpgrade = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
@@ -38,17 +37,9 @@
             this.listView = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
-            // listBox
-            // 
-            this.listBox.FormattingEnabled = true;
-            this.listBox.Location = new System.Drawing.Point(12, 64);
-            this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(333, 160);
-            this.listBox.TabIndex = 0;
-            // 
             // buttonUpgrade
             // 
-            this.buttonUpgrade.Location = new System.Drawing.Point(362, 64);
+            this.buttonUpgrade.Location = new System.Drawing.Point(507, 64);
             this.buttonUpgrade.Name = "buttonUpgrade";
             this.buttonUpgrade.Size = new System.Drawing.Size(75, 23);
             this.buttonUpgrade.TabIndex = 1;
@@ -58,7 +49,7 @@
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(362, 128);
+            this.buttonAdd.Location = new System.Drawing.Point(507, 105);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 2;
@@ -68,7 +59,7 @@
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(362, 198);
+            this.buttonDelete.Location = new System.Drawing.Point(507, 147);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(75, 23);
             this.buttonDelete.TabIndex = 3;
@@ -81,12 +72,12 @@
             this.comboBoxWays.FormattingEnabled = true;
             this.comboBoxWays.Location = new System.Drawing.Point(12, 28);
             this.comboBoxWays.Name = "comboBoxWays";
-            this.comboBoxWays.Size = new System.Drawing.Size(333, 21);
+            this.comboBoxWays.Size = new System.Drawing.Size(475, 21);
             this.comboBoxWays.TabIndex = 4;
             // 
             // buttonYourSection
             // 
-            this.buttonYourSection.Location = new System.Drawing.Point(362, 12);
+            this.buttonYourSection.Location = new System.Drawing.Point(507, 12);
             this.buttonYourSection.Name = "buttonYourSection";
             this.buttonYourSection.Size = new System.Drawing.Size(75, 39);
             this.buttonYourSection.TabIndex = 5;
@@ -104,9 +95,9 @@
             // 
             // listView
             // 
-            this.listView.Location = new System.Drawing.Point(13, 231);
+            this.listView.Location = new System.Drawing.Point(13, 64);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(424, 106);
+            this.listView.Size = new System.Drawing.Size(474, 106);
             this.listView.TabIndex = 7;
             this.listView.UseCompatibleStateImageBehavior = false;
             // 
@@ -114,7 +105,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(449, 349);
+            this.ClientSize = new System.Drawing.Size(594, 184);
             this.Controls.Add(this.listView);
             this.Controls.Add(this.labelSectionSelection);
             this.Controls.Add(this.buttonYourSection);
@@ -122,7 +113,6 @@
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.buttonUpgrade);
-            this.Controls.Add(this.listBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
@@ -133,8 +123,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.Button buttonUpgrade;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonDelete;

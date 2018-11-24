@@ -38,7 +38,7 @@ namespace RegeditAutoload
 
             ShowPrograms(registryKey);
 
-            //listBox.SelectedIndexChanged += ListBox_SelectedIndexChanged;
+
             listView.ItemSelectionChanged += ListView_ItemSelectionChanged;
             this.FormClosing += MainForm_FormClosing;
             // TODO: при изменение пути комбоБокса - закрывать предыдущий ключ
@@ -70,13 +70,12 @@ namespace RegeditAutoload
             listView.MultiSelect = false;
 
             listView.Columns.Add("Параметр", 100);
-            listView.Columns.Add("Значение", 200);
+            listView.Columns.Add("Значение", 370);
         }
 
         private void ComboBoxWays_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Закрываем открытый ключ.
-            registryKey.Close();
+            CloseAllSubKey();
 
             // TODO: проработать получение из комбо
             // Получаем новый ключ по выбрвнному пути.
@@ -97,19 +96,7 @@ namespace RegeditAutoload
                 item.Close();
             }
         }
-
-        private void ListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listBox.SelectedIndex == -1)
-            {
-                DisableDelButtons();
-            }
-            else
-            {
-                EnableDelButtons();
-            }
-        }
-
+        
         private void DisableDelButtons()
         {
             buttonDelete.Enabled = false;
@@ -122,18 +109,15 @@ namespace RegeditAutoload
 
         private void ShowPrograms(RegistryKey key)
         {
-            listBox.Items.Clear();
             listView.Items.Clear();
 
             if (key != null)
             {
-                foreach (var item in key.GetValueNames())
+                foreach (string parameter in key.GetValueNames())
                 {
-                    listBox.Items.Add(item + " : " + key.GetValue(item));
-
-                    ListViewItem listViewItem = new ListViewItem(item);
+                    ListViewItem listViewItem = new ListViewItem(parameter);
                     listViewItem.SubItems.Add(
-                        key.GetValue(item).ToString()
+                        key.GetValue(parameter).ToString()
                         );
 
                     listView.Items.Add(listViewItem);
@@ -161,8 +145,7 @@ namespace RegeditAutoload
             try
             {
                 registryKeysOpen.Clear();
-
-
+                
                 foreach (var item in path.Split('\\'))
                 {
                     key = key.OpenSubKey(item, true);
