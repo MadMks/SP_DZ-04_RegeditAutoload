@@ -16,6 +16,8 @@ namespace RegeditAutoload
         private RegistryKey registryKey = null;
         string pathRun = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run";
 
+        private List<RegistryKey> registryKeysOpen = null;
+
         public MainForm()
         {
             InitializeComponent();
@@ -25,6 +27,8 @@ namespace RegeditAutoload
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            registryKeysOpen = new List<RegistryKey>();
+
             DisableButtons();
 
             registryKey = GetLastSubKeyInPath(pathRun);
@@ -56,7 +60,16 @@ namespace RegeditAutoload
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            registryKey.Close();
+            CloseAllSubKey();
+        }
+
+        private void CloseAllSubKey()
+        {
+            this.registryKeysOpen.Reverse();
+            foreach (var item in registryKeysOpen)
+            {
+                item.Close();
+            }
         }
 
         private void ListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -91,7 +104,7 @@ namespace RegeditAutoload
             {
                 foreach (var item in key.GetValueNames())
                 {
-                    listBox.Items.Add(item + " 1");
+                    listBox.Items.Add(item + " : " + key.GetValue(item));
                 }
             }
             else
@@ -115,9 +128,13 @@ namespace RegeditAutoload
 
             try
             {
+                registryKeysOpen.Clear();
+
+
                 foreach (var item in path.Split('\\'))
                 {
                     key = key.OpenSubKey(item, true);
+                    registryKeysOpen.Add(key);
                 }
             }
             catch (Exception ex)
