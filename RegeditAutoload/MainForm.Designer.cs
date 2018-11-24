@@ -48,9 +48,9 @@
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(507, 71);
+            this.buttonAdd.Location = new System.Drawing.Point(507, 64);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(75, 39);
+            this.buttonAdd.Size = new System.Drawing.Size(75, 46);
             this.buttonAdd.TabIndex = 2;
             this.buttonAdd.Text = "Добавить";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -60,7 +60,7 @@
             // 
             this.buttonDelete.Location = new System.Drawing.Point(507, 124);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(75, 39);
+            this.buttonDelete.Size = new System.Drawing.Size(75, 46);
             this.buttonDelete.TabIndex = 3;
             this.buttonDelete.Text = "Удалить";
             this.buttonDelete.UseVisualStyleBackColor = true;
