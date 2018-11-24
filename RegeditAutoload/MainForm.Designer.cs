@@ -35,6 +35,7 @@
             this.comboBoxWays = new System.Windows.Forms.ComboBox();
             this.buttonYourSection = new System.Windows.Forms.Button();
             this.labelSectionSelection = new System.Windows.Forms.Label();
+            this.listView = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
             // listBox
@@ -101,11 +102,20 @@
             this.labelSectionSelection.TabIndex = 6;
             this.labelSectionSelection.Text = "Выбор раздела:";
             // 
+            // listView
+            // 
+            this.listView.Location = new System.Drawing.Point(13, 231);
+            this.listView.Name = "listView";
+            this.listView.Size = new System.Drawing.Size(424, 106);
+            this.listView.TabIndex = 7;
+            this.listView.UseCompatibleStateImageBehavior = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(449, 236);
+            this.ClientSize = new System.Drawing.Size(449, 349);
+            this.Controls.Add(this.listView);
             this.Controls.Add(this.labelSectionSelection);
             this.Controls.Add(this.buttonYourSection);
             this.Controls.Add(this.comboBoxWays);
@@ -131,6 +141,7 @@
         private System.Windows.Forms.ComboBox comboBoxWays;
         private System.Windows.Forms.Button buttonYourSection;
         private System.Windows.Forms.Label labelSectionSelection;
+        private System.Windows.Forms.ListView listView;
     }
 }
 
